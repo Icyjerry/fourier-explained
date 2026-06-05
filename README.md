@@ -1,32 +1,12 @@
-# 傅里叶级数与傅里叶变换：从声音到频谱
+# Fourier 级数与傅里叶变换
 
-A Chinese-language interactive teaching page that explains Fourier series and Fourier transforms through animated visualizations — decomposing complex waveforms into simple sine waves.
+高等数学课上为了理解傅里叶变换做的一个交互式页面，把时域信号拆成频域成分的过程用动画画出来，比课本上的公式直观一些。
 
-在线演示：[fourier-explained](https://icyjerry.github.io/fourier-explained/)
+写了几个 Canvas 动画：
+- 用正弦波叠加出方波，可以调频率数量看逼近效果
+- 时域和频域的同屏对比
+- 周期 T 逐渐变大时频谱从离散变连续的过程
 
-## 内容涵盖
+纯 HTML，直接用浏览器打开就能看。
 
-- 🎵 **谐波叠加动画** — 可调 1-25 个频率，观察方波如何由正弦波叠加而成
-- 🔄 **时域 vs 频域** — 同一信号的双重视角对比
-- 📐 **傅里叶级数** — 周期函数的分解：找周期 → 整数倍频率 → 算权重
-- 📈 **从级数到变换** — T→∞ 时离散频谱变为连续频谱的动画演示
-- 🎛️ 多个交互式滑块实时控制参数
-
-## 技术栈
-
-纯前端，单文件 HTML（~2400 行），零依赖：
-- Canvas API 绘制波形动画
-- CSS 自定义属性 + 柔和设计语言
-- 响应式布局，桌面/移动端均可浏览
-
-## 本地运行
-
-直接用浏览器打开 `index.html` 即可，无需构建。
-
-```bash
-open index.html
-```
-
-## License
-
-MIT
+[https://icyjerry.github.io/fourier-explained/](https://icyjerry.github.io/fourier-explained/)
