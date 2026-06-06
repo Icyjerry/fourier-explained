@@ -382,6 +382,52 @@
       margin: 0;
     }
 
+    .learning-path {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .learning-path a {
+      min-height: 104px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .learning-path strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--blue);
+      font-size: 15px;
+    }
+
+    .chapter-next {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 30px;
+      padding: 16px 18px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .chapter-next strong {
+      color: var(--ink);
+    }
+
+    .chapter-next a {
+      flex: 0 0 auto;
+      color: var(--blue);
+      font-weight: 800;
+    }
+
     .equation-chain {
       display: grid;
       gap: 12px;
@@ -490,6 +536,70 @@
       background: #fbfcfd;
     }
 
+    .concept-demo {
+      margin-top: 28px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .concept-demo canvas {
+      aspect-ratio: 2 / 1;
+      min-height: 380px;
+      background: #fbfcfd;
+    }
+
+    .ai-demo canvas {
+      aspect-ratio: 1.9 / 1;
+      min-height: 500px;
+    }
+
+    .ai-bridge {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 26px;
+      align-items: stretch;
+    }
+
+    .ai-bridge > div {
+      padding: 15px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .ai-bridge strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+
+    .ai-bridge .bridge-arrow {
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--teal);
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .demo-copy {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .demo-copy p:last-child {
+      margin-bottom: 0;
+    }
+
     .steps {
       counter-reset: step;
       display: grid;
@@ -596,8 +706,15 @@
       .concept-flow,
       .property-grid,
       .callout-row,
-      .lab-toolbar {
+      .lab-toolbar,
+      .ai-bridge,
+      .learning-path {
         grid-template-columns: 1fr;
+      }
+
+      .ai-bridge .bridge-arrow {
+        min-height: 24px;
+        transform: rotate(90deg);
       }
 
       .topbar {
@@ -631,6 +748,16 @@
         display: block;
         overflow-x: auto;
       }
+
+      .chapter-next {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .ai-demo canvas {
+        aspect-ratio: 0.62 / 1;
+        min-height: 760px;
+      }
     }
   </style>
 </head>
@@ -641,16 +768,18 @@
       <span>傅里叶从零开始</span>
     </a>
     <nav class="nav" aria-label="页面导航">
-      <a href="#idea">核心想法</a>
-      <a href="#series">傅里叶级数</a>
-      <a href="#course">课件路线</a>
-      <a href="#complex">复数形式</a>
-      <a href="#transform">傅里叶变换</a>
-      <a href="#inverse">反演</a>
-      <a href="#properties">性质</a>
-      <a href="#convolution">卷积</a>
-      <a href="#symbols">符号</a>
-      <a href="#examples">例子</a>
+      <a href="#idea">1 直觉</a>
+      <a href="#series">2 级数</a>
+      <a href="#course">3 极限桥梁</a>
+      <a href="#complex">4 复数工具</a>
+      <a href="#transform">5 变换</a>
+      <a href="#inverse">6 反演</a>
+      <a href="#properties">7 性质</a>
+      <a href="#energy">8 能量</a>
+      <a href="#convolution">9 应用</a>
+      <a href="#symbols">10 速查</a>
+      <a href="#examples">11 例题</a>
+      <a href="#ai">12 AI</a>
     </nav>
   </header>
 
@@ -665,11 +794,11 @@
         </div>
         <div class="plain-row">
           <strong>再理解</strong>
-          <span>傅里叶级数处理重复图案；傅里叶变换处理不一定重复的图案。</span>
+          <span>先学周期函数的傅里叶级数，再让周期趋于无穷，得到傅里叶变换。</span>
         </div>
         <div class="plain-row">
-          <strong>最后记</strong>
-          <span>原函数讲“它长什么样”；频谱讲“它里面有哪些频率”。</span>
+          <strong>最后会用</strong>
+          <span>用频域处理跳跃、能量、卷积和微分方程，最后连接到 CNN。</span>
         </div>
       </div>
     </div>
@@ -698,7 +827,7 @@
   <main>
     <section id="idea">
       <div class="section-inner">
-        <p class="eyebrow">第一层直觉</p>
+        <p class="eyebrow">第 1 章 · 先建立直觉</p>
         <h2>傅里叶在问：这个东西由哪些“纯音”组成？</h2>
         <p class="intro">钢琴弹一个音，看起来只是“咚”的一声，但它其实包含基频和很多泛音。傅里叶分析做的事，就是把混在一起的成分分开。</p>
 
@@ -724,6 +853,15 @@
           中学生版一句话：傅里叶分析就是“把复杂波形分解成不同快慢的简单波”，再记录每种简单波用了多少。
         </div>
 
+        <div class="learning-path" aria-label="本课学习路线">
+          <a href="#series"><strong>① 周期分解</strong>先用离散频率拼周期函数。</a>
+          <a href="#course"><strong>② 拉长周期</strong>观察离散频率如何变连续。</a>
+          <a href="#complex"><strong>③ 统一记号</strong>用复指数合并正弦和余弦。</a>
+          <a href="#transform"><strong>④ 变换与反演</strong>在原域和频域之间往返。</a>
+          <a href="#properties"><strong>⑤ 性质与应用</strong>把微分、卷积和能量变简单。</a>
+          <a href="#ai"><strong>⑥ 连接 AI</strong>理解 CNN 卷积核的频率偏好。</a>
+        </div>
+
         <div class="grid-2" style="margin-top:30px;">
           <div>
             <h3>动画：级数 vs 变换</h3>
@@ -737,14 +875,19 @@ Fourier 变换：非周期函数 → 连续频率
             <canvas id="seriesVsTransformCanvas" width="900" height="520"></canvas>
           </div>
         </div>
+
+        <div class="chapter-next">
+          <span><strong>接下来：</strong>先从最容易控制的周期函数开始，因为它只需要一组离散频率。</span>
+          <a href="#series">进入傅里叶级数 ↓</a>
+        </div>
       </div>
     </section>
 
     <section id="series">
       <div class="section-inner">
-        <p class="eyebrow">第二层：重复图案</p>
+        <p class="eyebrow">第 2 章 · 周期函数的分解</p>
         <h2>傅里叶级数：专门处理“周期函数”</h2>
-        <p class="intro">如果一个图案不断重复，比如钟摆、交流电、每秒重复的声音波形，就可以用傅里叶级数来表示。</p>
+        <p class="intro">如果一个图案不断重复，比如钟摆、交流电或稳定音色，就只需要基本频率及其整数倍。先掌握这套离散“频率配方”，才能理解后面的连续频谱。</p>
 
         <div class="grid-2">
           <div>
@@ -781,14 +924,19 @@ f(x) ≈ a0/2 + a1 cos(x) + b1 sin(x)
             <p>这些权重就是 Fourier 系数。它们告诉我们“这个频率用了多少”。</p>
           </div>
         </div>
+
+        <div class="chapter-next">
+          <span><strong>新的问题：</strong>一次脉冲并不重复，离散的整数倍频率还够用吗？先把它暂时复制成一个超长周期函数。</span>
+          <a href="#course">看周期如何趋于无穷 ↓</a>
+        </div>
       </div>
     </section>
 
     <section id="course">
       <div class="section-inner">
-        <p class="eyebrow">按课件页 265-266 的路线</p>
-        <h2>从非周期函数到 Fourier 变换，要走三步</h2>
-        <p class="intro">图片第一页说得很关键：对于不具备周期性的函数，先暂时把它看成“大周期函数”的极限情况。这个思路是从 Fourier 级数走到 Fourier 变换的桥。</p>
+        <p class="eyebrow">第 3 章 · 课件页 265-266 的极限桥梁</p>
+        <h2>先看路线：把非周期函数当成“无限长周期”</h2>
+        <p class="intro">这里先看整体思路，不急着完成公式推导：截取、周期延拓、再令周期趋于无穷。等下一章准备好复指数记号后，我们就能把这条路线真正写成 Fourier 变换。</p>
 
         <div class="concept-flow">
           <div class="concept-node">
@@ -829,14 +977,19 @@ T → +∞  时，Δω → 0
             <input id="frequencyGap" type="range" min="35" max="140" value="78">
           </div>
         </div>
+
+        <div class="chapter-next">
+          <span><strong>还缺一件工具：</strong>极限中的正弦项和余弦项很多，继续分开记会很笨重；复指数可以把它们统一起来。</span>
+          <a href="#complex">准备复数形式 ↓</a>
+        </div>
       </div>
     </section>
 
     <section id="complex">
       <div class="section-inner">
-        <p class="eyebrow">第三层：为什么会有虚数</p>
-        <h2>复数形式只是更省事的写法</h2>
-        <p class="intro">课件里的 <span class="term">c<sub>n</sub></span>、<span class="term">c<sub>-n</sub></span>、<span class="term">e<sup>iωx</sup></span> 看起来吓人，其实是在把正弦和余弦合并记账。</p>
+        <p class="eyebrow">第 4 章 · 完成推导前的复数工具</p>
+        <h2>复数形式：把正弦和余弦合并记账</h2>
+        <p class="intro">课件里的 <span class="term">c<sub>n</sub></span>、<span class="term">c<sub>-n</sub></span>、<span class="term">e<sup>iωx</sup></span> 不是额外增加一种波，而是用旋转向量同时记录振幅与相位，让后面的极限推导更整齐。</p>
 
         <div class="grid-2">
           <div class="card">
@@ -910,14 +1063,19 @@ c_{-n} = a_n + i b_n
         <div class="note">
           这里的虚数不是说物理世界“虚假”，而是一种高效记号。最后还原成真实波形时，正频率和负频率会配对，结果仍然可以是普通实数函数。
         </div>
+
+        <div class="chapter-next">
+          <span><strong>工具已经齐全：</strong>现在把复数形式的 Fourier 级数代回上一章，并令频率间隔趋于 0，求和就会变成积分。</span>
+          <a href="#transform">正式得到傅里叶变换 ↓</a>
+        </div>
       </div>
     </section>
 
     <section id="transform">
       <div class="section-inner">
-        <p class="eyebrow">第四层：不重复怎么办</p>
-        <h2>傅里叶变换：把“无限长周期”变成连续频率</h2>
-        <p class="intro">傅里叶级数适合重复图案。但现实里很多东西不重复，比如一次鼓声、一个脉冲、一张照片里的边缘。办法是：把周期想象得越来越长，最后长到无限。</p>
+        <p class="eyebrow">第 5 章 · 从离散求和到连续积分</p>
+        <h2>傅里叶变换：让频率间隔趋于 0</h2>
+        <p class="intro">把第 3 章的极限路线和第 4 章的复数形式合在一起：当 T→∞ 时，Δω=π/T→0，离散频率求和变成连续频率积分。非周期函数因此也有了频谱。</p>
 
         <div class="diagram">
           <canvas id="transformCanvas" width="1200" height="560"></canvas>
@@ -956,12 +1114,17 @@ Fourier 逆变换：f(x) = (1/2π) ∫ f̂(ω) e^{iωx} dω
             <p>F 把原函数送到频域；F⁻¹ 把频域信息还原回原函数。</p>
           </article>
         </div>
+
+        <div class="chapter-next">
+          <span><strong>自然追问：</strong>既然频谱保存了原函数的信息，逆变换是否在每一个点都原样恢复？跳跃点会给出一个重要例外。</span>
+          <a href="#inverse">理解 Fourier 反演 ↓</a>
+        </div>
       </div>
     </section>
 
     <section id="inverse">
       <div class="section-inner">
-        <p class="eyebrow">按课件页 267 的反演定理</p>
+        <p class="eyebrow">第 6 章 · 课件页 267 的反演定理</p>
         <h2>逆变换不是永远等于原函数的“点值”</h2>
         <p class="intro">课件强调：在适当条件下，Fourier 积分等于左右极限的平均值。连续点当然等于 f(x)，但跳跃点要小心。</p>
 
@@ -991,14 +1154,19 @@ Fourier 积分在 x 处 =
             <input id="rectHeight" type="range" min="50" max="150" value="100">
           </div>
         </div>
+
+        <div class="chapter-next">
+          <span><strong>从“能不能还原”到“怎样计算”：</strong>掌握反演后，下一步不是继续硬算积分，而是利用变换性质快速搬运已知结果。</span>
+          <a href="#properties">学习操作对照表 ↓</a>
+        </div>
       </div>
     </section>
 
     <section id="properties">
       <div class="section-inner">
-        <p class="eyebrow">按课件页 268-270 的性质</p>
+        <p class="eyebrow">第 7 章 · 课件页 268-270 的计算工具</p>
         <h2>Fourier 变换的性质，就是一张“操作对照表”</h2>
-        <p class="intro">它们告诉你：在 x 域做一件事，频域会发生什么。做题时比硬积分更重要。</p>
+        <p class="intro">变换与反演解决了“如何往返”，性质则解决“怎样少算”。它们告诉你在 x 域做一件事，频域会发生什么，通常比重新硬积分更快。</p>
 
         <div class="property-grid">
           <article class="property">
@@ -1058,14 +1226,104 @@ Fourier 积分在 x 处 =
             <input id="scaleControl" type="range" min="45" max="130" value="85">
           </div>
         </div>
+
+        <div class="chapter-next">
+          <span><strong>性质带来两个核心视角：</strong>系数平方可以统计能量；卷积和微分则会在频域变成更简单的乘法。</span>
+          <a href="#energy">先看能量如何守恒 ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="energy">
+      <div class="section-inner">
+        <p class="eyebrow">第 8 章 · Bessel 不等式与 Parseval 等式</p>
+        <h2>Fourier 系数不只是“形状配方”，平方后还能计算能量</h2>
+        <p class="intro">前面用系数描述“每个频率有多少”。现在把这些系数平方，就能描述每个频率分到多少能量。Bessel 讨论有限项，Parseval 讨论全部频率。</p>
+
+        <div class="grid-2">
+          <div>
+            <span class="tag">Bessel 不等式</span>
+            <h3>只取有限项：捕获能量 ≤ 总能量</h3>
+            <p>把函数投影到前 N 个正弦、余弦方向上，只能得到原函数的一部分。漏掉的高频仍然带有能量，因此有限项系数平方和不会超过总能量。</p>
+            <div class="formula">
+(1/π)∫_{-π}^{π}|f(x)|²dx
+≥ a_0²/2 + Σ_{n=1}^{N}(a_n²+b_n²)
+            </div>
+          </div>
+          <div>
+            <span class="tag">Parseval 等式</span>
+            <h3>取完全部频率：捕获能量 = 总能量</h3>
+            <p>当 Fourier 系统能够完整表示函数，并把所有频率都算进去时，没有能量遗漏，不等式就变成等式。</p>
+            <div class="formula">
+(1/π)∫_{-π}^{π}|f(x)|²dx
+= a_0²/2 + Σ_{n=1}^{∞}(a_n²+b_n²)
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          二者的关系可以记成：Bessel 是“目前找到的能量不会超标”，Parseval 是“所有频率找齐后正好全部对上”。
+        </div>
+
+        <div class="grid-2">
+          <div class="diagram">
+            <canvas id="besselCanvas" width="900" height="600"></canvas>
+          </div>
+          <div>
+            <h3>动画 1：方波的有限项能量</h3>
+            <p>这里使用标准方波 f(x)=±1。它只有奇数正弦项，系数为 b_n=4/(πn)。滑动项数可以看到 Fourier 近似越来越接近方波，已捕获能量不断增加，但始终不超过总能量 2。</p>
+            <div class="formula">
+总能量：(1/π)∫_{-π}^{π}|f(x)|²dx = 2
+
+前 N 项能量：Σ_{n=1,3,5,...,N}16/(π²n²) ≤ 2
+            </div>
+            <div class="controls" style="padding-left:0;padding-right:0;border-top:0;">
+              <div class="control">
+                <label for="besselTerms"><span>最高奇次谐波 N</span><b id="besselTermsValue">7</b></label>
+                <input id="besselTerms" type="range" min="1" max="31" value="7" step="2">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <h3>课件中的 Fourier 变换 Parseval 等式</h3>
+            <p>课件页 271 使用的是 Fourier 变换版本。左边是 x 域能量，右边是频域能量；按照课件的变换约定，频域一侧带有 1/(2π)。</p>
+            <div class="formula">
+∫_{-∞}^{∞}|f(x)|²dx
+= (1/(2π))∫_{-∞}^{∞}|f̂(ω)|²dω
+            </div>
+            <p>动画选择高斯函数 f(x)=e^{-αx²}。虽然 α 改变后两边曲线宽窄不同，但按各自横轴刻度计算出的积分值始终相等。</p>
+          </div>
+          <div class="diagram">
+            <canvas id="parsevalCanvas" width="900" height="600"></canvas>
+          </div>
+        </div>
+
+        <div class="controls" style="padding-left:0;padding-right:0;border-top:0;">
+          <div class="control">
+            <label for="parsevalAlpha"><span>高斯参数 α</span><b id="parsevalAlphaValue">1.00</b></label>
+            <input id="parsevalAlpha" type="range" min="35" max="180" value="100">
+          </div>
+          <div class="control">
+            <label><span>两侧共同能量</span><b id="parsevalEnergyValue">1.253</b></label>
+            <input type="range" min="0" max="100" value="100" disabled>
+          </div>
+        </div>
+
+        <div class="chapter-next">
+          <span><strong>能量视角回答“有多少”：</strong>接下来进入运算视角，看看卷积和微分方程为什么到了频域会突然变简单。</span>
+          <a href="#convolution">进入实际应用 ↓</a>
+        </div>
       </div>
     </section>
 
     <section id="convolution">
       <div class="section-inner">
-        <p class="eyebrow">按课件页 270-272 的应用</p>
-        <h2>卷积、Parseval、微分方程：傅里叶变换真正好用的地方</h2>
-        <p class="intro">后面几页课件进入应用：卷积的 Fourier 变换是乘积，Parseval 说明能量守恒，微分方程在频域会变成更简单的代数或常微分方程。</p>
+        <p class="eyebrow">第 9 章 · 课件页 270-272 的应用</p>
+        <h2>卷积与微分方程：复杂运算怎样变成乘法</h2>
+        <p class="intro">上一章说明能量在两种表示中一致；这一章进一步利用运算性质：滑动积分变成频谱相乘，空间导数变成乘以 iω 或 -ω²。</p>
 
         <div class="grid-2">
           <div class="diagram">
@@ -1107,18 +1365,23 @@ û(ω,t) = f̂(ω)e^{-a²ω²t}
 
         <div class="callout-row">
           <div class="callout"><strong>卷积</strong><span>原域复杂滑动积分，频域变乘法。</span></div>
-          <div class="callout"><strong>Parseval</strong><span>原域能量等于频域能量乘 1/(2π)。</span></div>
+          <div class="callout"><strong>滤波</strong><span>改变频谱的某些部分，就能模糊、去噪或强化边缘。</span></div>
           <div class="callout"><strong>微分方程</strong><span>导数在频域变成 iω 或 -ω²。</span></div>
           <div class="callout"><strong>热方程</strong><span>高频衰减更快，尖角会变圆滑。</span></div>
+        </div>
+
+        <div class="chapter-next">
+          <span><strong>理论主线到这里闭环：</strong>先做一次符号检查，再用完整例题把直接积分、性质法、卷积和微分逐一练熟。</span>
+          <a href="#symbols">先复盘符号 ↓</a>
         </div>
       </div>
     </section>
 
     <section id="symbols">
       <div class="section-inner">
-        <p class="eyebrow">符号速查</p>
+        <p class="eyebrow">第 10 章 · 做题前的符号检查点</p>
         <h2>把课件里的记号翻译成人话</h2>
-        <p class="intro">先把符号看顺，后面的公式就不会像突然冒出来的暗号。</p>
+        <p class="intro">概念和应用已经串起来了。进入例题前，用这张表确认 F、f 尖、正负频率系数和角频率分别指什么，避免把记号错误当成计算错误。</p>
 
         <table class="compare" aria-label="傅里叶符号解释">
           <thead>
@@ -1161,51 +1424,73 @@ û(ω,t) = f̂(ω)e^{-a²ω²t}
             </tr>
           </tbody>
         </table>
+
+        <div class="chapter-next">
+          <span><strong>现在开始做题：</strong>先观察两个关键性质的完整动画推导，再学习不同函数该选择直接积分还是套用性质。</span>
+          <a href="#examples">进入推导与例题 ↓</a>
+        </div>
       </div>
     </section>
 
     <section id="examples">
       <div class="section-inner">
-        <p class="eyebrow">最后落地</p>
-        <h2>几个最该记住的例子</h2>
-        <p class="intro">看懂这些例子，就能把傅里叶从“抽象公式”变成“可用工具”。</p>
+        <p class="eyebrow">第 11 章 · 从概念到可复用的解题方法</p>
+        <h2>先把关键性质算明白，再做函数变换</h2>
+        <p class="intro">这一章不再重复介绍概念，而是验证前面最重要的两条结论：卷积值怎样由重叠面积产生，求导为何对应乘以 iω。随后再进入函数变换题。</p>
 
-        <div class="grid-2">
-          <article class="card">
-            <span class="tag">矩形波</span>
-            <h3>边缘越硬，高频越多</h3>
-            <p>方方正正的图形有突然跳变，所以需要很多高频波去拼边缘。</p>
+        <h3 style="margin-top:30px;">A. 两段关键推导动画</h3>
+
+        <div class="concept-demo">
+          <div class="demo-copy">
+            <span class="tag">准确动画：卷积</span>
+            <h3>两个矩形相卷积，为什么会得到三角形？</h3>
+            <p>取 f(t)=1（0≤t≤1）和 g(t)=1（0≤t≤1）。计算 (f*g)(x) 时，红色的 g(x-t) 在蓝色 f(t) 上滑动。因为相乘后只有重叠部分等于 1，所以积分值恰好就是绿色重叠长度。</p>
             <div class="formula">
-矩形波的频谱大致像 sin(ωδ) / ω
+(f*g)(x)=∫f(t)g(x-t)dt
+= 0, x&lt;0
+= x, 0≤x≤1
+= 2-x, 1≤x≤2
+= 0, x&gt;2
             </div>
-          </article>
-          <article class="card">
-            <span class="tag">高斯函数</span>
-            <h3>平滑的东西，频谱也平滑</h3>
-            <p>钟形曲线很光滑，它的 Fourier 变换仍然是钟形曲线。这在热传导里特别重要。</p>
-            <div class="formula">
-F[e^{-αx²}] = √(π/α) e^{-ω²/(4α)}
+          </div>
+          <canvas id="convolutionExactCanvas" width="1300" height="650"></canvas>
+          <div class="controls">
+            <div class="control">
+              <label for="convolutionExactX"><span>滑动位置 x</span><b id="convolutionExactXValue">0.50</b></label>
+              <input id="convolutionExactX" type="range" min="-40" max="240" value="50">
             </div>
-          </article>
-          <article class="card">
-            <span class="tag">卷积</span>
-            <h3>一个东西被另一个东西“抹开”</h3>
-            <p>卷积可以理解成一种加权平均。频域里，卷积会变成乘法。</p>
-            <div class="formula">
-F[f * g] = F[f] · F[g]
+            <div class="control">
+              <label for="convolutionAuto"><span>自动演示</span><b>循环滑动</b></label>
+              <input id="convolutionAuto" type="checkbox" checked>
             </div>
-          </article>
-          <article class="card">
-            <span class="tag">微分</span>
-            <h3>求导变成乘以频率</h3>
-            <p>这就是为什么 Fourier 变换能解微分方程：复杂的导数运算变成代数乘法。</p>
-            <div class="formula">
-F[f'] = iω F[f]
-            </div>
-          </article>
+          </div>
         </div>
 
-        <h2 style="margin-top:44px;">更多函数的 Fourier 变换例题</h2>
+        <div class="concept-demo">
+          <div class="demo-copy">
+            <span class="tag">准确动画：微分</span>
+            <h3>为什么求导会变成乘以 iω？</h3>
+            <p>选用 f(x)=e^{-x²/2}。它的导数是 -xe^{-x²/2}，Fourier 变换是 √(2π)e^{-ω²/2}。乘上 iω 后，频谱大小变为 |ω| 倍，并在复平面旋转 90°；这正好就是 f' 的频谱。</p>
+            <div class="formula">
+f(x)=e^{-x²/2},  f'(x)=-xe^{-x²/2}
+F[f](ω)=√(2π)e^{-ω²/2}
+F[f'](ω)=iω√(2π)e^{-ω²/2}=iωF[f](ω)
+            </div>
+          </div>
+          <canvas id="derivativeExactCanvas" width="1300" height="650"></canvas>
+          <div class="controls">
+            <div class="control">
+              <label for="derivativeOmega"><span>观察频率 ω</span><b id="derivativeOmegaValue">1.20</b></label>
+              <input id="derivativeOmega" type="range" min="-300" max="300" value="120">
+            </div>
+            <div class="control">
+              <label for="derivativeAuto"><span>自动演示</span><b>扫描频率</b></label>
+              <input id="derivativeAuto" type="checkbox" checked>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:44px;">B. 不同函数该怎样选择方法</h3>
         <p class="intro">下面这些例子都使用课件约定：<code>F[f](ω)=∫f(x)e^{-iωx}dx</code>。先看函数类型，再决定是直接积分，还是用性质。</p>
 
         <div class="example-lab" aria-label="函数与 Fourier 变换互动配图">
@@ -1366,8 +1651,211 @@ F[f'](ω)
           做题小口诀：分段先找区间，绝对值先拆两边；平移缩放看性质，乘三角先用 Euler；遇到导数和卷积，优先去频域。
         </div>
 
+        <div class="chapter-next">
+          <span><strong>数学部分已经贯通：</strong>接下来把频域当作 AI 的一种“观察坐标”，看它怎样表示数据、解释模型并加速计算。</span>
+          <a href="#ai">连接到 AI 应用 ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="ai">
+      <div class="section-inner">
+        <p class="eyebrow">第 12 章 · 从经典分析走向 AI</p>
+        <h2>傅里叶在 AI 中：表示、解释与加速</h2>
+        <p class="intro">傅里叶变换不是一种神经网络，也不是所有 AI 的必经步骤。它的价值是换一套坐标描述数据：原域告诉我们“变化发生在哪里”，频域告诉我们“包含哪些尺度、方向和周期”。这套视角可以直接成为模型输入，也可以帮助理解模型或加快某些运算。</p>
+
+        <div class="ai-bridge" aria-label="傅里叶变换在 AI 中的作用">
+          <div><strong>原始数据</strong>声音、图像、空间坐标或物理场</div>
+          <div class="bridge-arrow" aria-hidden="true">→</div>
+          <div><strong>Fourier / FFT</strong>拆成不同频率、方向与尺度</div>
+          <div class="bridge-arrow" aria-hidden="true">→</div>
+          <div><strong>AI 使用频域</strong>识别、学习、诊断或加速</div>
+        </div>
+
         <div class="note">
-          一条学习路线：先会看波形叠加，再理解级数；先接受复数形式是记号，再学习它的计算优势；最后把傅里叶变换用于频谱、卷积和微分方程。
+          傅里叶视角主要回答三类问题：<strong>表示</strong>——把数据变成更容易学习的频率特征；<strong>解释</strong>——看模型保留或压制了哪些频率；<strong>计算</strong>——利用卷积定理和 FFT 减少某些大规模运算。
+        </div>
+
+        <h3 style="margin-top:34px;">A. 不只 CNN：傅里叶思想在 AI 中的几条路线</h3>
+        <div class="grid-3">
+          <article class="card soft">
+            <span class="tag">语音与音频</span>
+            <h3>把波形变成时频图</h3>
+            <p>语音会随时间变化，常用短时 Fourier 变换（STFT）把它变成频谱图。模型由此更容易看到音高、共振峰、节奏和噪声分别出现在哪里。</p>
+          </article>
+          <article class="card warm">
+            <span class="tag">图像恢复与生成</span>
+            <h3>区分轮廓、纹理与伪影</h3>
+            <p>低频常对应整体结构，高频常对应边缘和细纹。频域损失、频率滤波和频谱检查可用于去噪、超分辨率、去模糊及分析周期性生成伪影。</p>
+          </article>
+          <article class="card cool">
+            <span class="tag">Fourier 特征</span>
+            <h3>让网络更容易表达细节</h3>
+            <p>把坐标 x 映射为多组 sin(ωx)、cos(ωx)，能让普通 MLP 更容易拟合快速变化的图像或三维场。正弦位置编码也使用了相近的多频率表示思想。</p>
+          </article>
+          <article class="card">
+            <span class="tag">Fourier Neural Operator</span>
+            <h3>学习物理场之间的映射</h3>
+            <p>FNO 把温度场、流体场等变到频域，在选定 Fourier 模态上学习变换，再逆变换回空间域，用于近似偏微分方程的解算子。</p>
+          </article>
+          <article class="card">
+            <span class="tag">FFT 加速</span>
+            <h3>把大卷积改成频域乘法</h3>
+            <p>长序列或大卷积核直接滑动的代价较高，可以先做 FFT、逐频率相乘、再逆 FFT。小型 3×3 卷积通常仍适合直接计算。</p>
+          </article>
+          <article class="card">
+            <span class="tag">模型诊断</span>
+            <h3>检查频率偏好与混叠</h3>
+            <p>研究者可以比较输入、特征和输出的频谱，观察模型是否过度依赖纹理、是否丢失细节，以及下采样是否产生混叠。</p>
+          </article>
+        </div>
+
+        <div class="note">
+          要注意术语边界：STFT、FFT、频域卷积和 FNO 会直接计算 Fourier 变换；Fourier 特征和正弦位置编码主要借用多频率基函数；频谱诊断则是在训练前后用 Fourier 工具观察模型。
+        </div>
+
+        <h3 style="margin-top:42px;">B. 重点案例：傅里叶变换怎样解释 CNN</h3>
+        <p class="intro">CNN 在空间域里学习局部模板。傅里叶变换的意义不是替代这次局部计算，而是把整张图和卷积核同时变到频域，让卷积核对每种频率的作用一目了然。</p>
+
+        <div class="concept-flow">
+          <div class="concept-node">
+            <strong>空间域回答“哪里”</strong>
+            <p>卷积核逐块扫描，告诉我们边缘或纹理出现在图像的哪个位置。</p>
+          </div>
+          <div class="concept-node">
+            <strong>频域回答“什么尺度”</strong>
+            <p>频率响应告诉我们卷积核偏爱平缓结构、细节，还是某个方向的边缘。</p>
+          </div>
+          <div class="concept-node">
+            <strong>卷积定理连接两边</strong>
+            <p>空间域的滑动加权，在频域变成逐频率乘法，因此能够分析，也可能加速。</p>
+          </div>
+        </div>
+
+        <div class="concept-demo ai-demo">
+          <div class="demo-copy">
+            <span class="tag">动画 1：先看空间域</span>
+            <h3>CNN 实际怎样逐块产生特征图？</h3>
+            <p>黄色框每次只看输入图像的一小块。把 9 个像素分别乘以卷积核的 9 个权重，再全部相加，就得到右侧特征图中的一个格子。这幅动画说明“哪里有响应”，但单看它还不容易概括卷积核整体偏爱什么图案。</p>
+            <div class="formula">
+Y[i,j] = \sum_{u=0}^{2} \sum_{v=0}^{2} X[i+u,j+v] K[u,v]
+\operatorname{ReLU}(Y) = \max(0,Y)
+            </div>
+          </div>
+          <canvas id="cnnCanvas" width="1300" height="700"></canvas>
+          <div class="controls">
+            <div class="control">
+              <label for="cnnPattern"><span>输入图案</span><b>10×10 像素</b></label>
+              <select id="cnnPattern">
+                <option value="verticalEdge">竖直明暗边缘</option>
+                <option value="horizontalEdge">水平明暗边缘</option>
+                <option value="checker">棋盘纹理</option>
+                <option value="spot">中心亮点</option>
+              </select>
+            </div>
+            <div class="control">
+              <label for="cnnKernel"><span>卷积核</span><b id="cnnKernelHint">检测竖直边缘</b></label>
+              <select id="cnnKernel">
+                <option value="sobelX">Sobel X：竖直边缘</option>
+                <option value="sobelY">Sobel Y：水平边缘</option>
+                <option value="blur">均值模糊：低通</option>
+                <option value="sharpen">锐化：增强高频</option>
+              </select>
+            </div>
+            <div class="control">
+              <label for="cnnPosition"><span>扫描位置</span><b id="cnnPositionValue">第 1 / 64 格</b></label>
+              <input id="cnnPosition" type="range" min="0" max="63" value="0">
+            </div>
+            <div class="control">
+              <label for="cnnAuto"><span>自动扫描</span><b>逐格计算</b></label>
+              <input id="cnnAuto" type="checkbox" checked>
+            </div>
+            <div class="control">
+              <label for="cnnRelu"><span>应用 ReLU</span><b>负数归零</b></label>
+              <input id="cnnRelu" type="checkbox">
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          术语要说准确：TensorFlow、PyTorch 等框架里的 <code>Conv2D</code> 通常计算的是<strong>互相关</strong>，也就是卷积核不翻转。因为卷积核参数是训练出来的，翻不翻都能学到等价检测器，所以工程上仍习惯叫“卷积层”。
+        </div>
+
+        <div class="concept-demo ai-demo">
+          <div class="demo-copy">
+            <span class="tag">动画 2：傅里叶变换的关键意义</span>
+            <h3>一次看清卷积核对所有频率做了什么</h3>
+            <p>空间域需要逐格滑动；变到频域后，每个频率可以单独看：输入在该频率有多少，卷积核让它通过多少，输出就剩多少。这样无需追踪每一个像素乘法，就能整体判断它是低通、高通还是方向性边缘检测器。</p>
+            <div class="formula">
+F[Y](p,q) = F[X](p,q) \cdot \overline{F[K](p,q)}
+\lvert F[Y](p,q) \rvert = \lvert F[X](p,q) \rvert \cdot \lvert F[K](p,q) \rvert
+            </div>
+            <p>下面采用周期边界的二维离散互相关，因此 DFT 关系严格成立。十字光标在三张频谱上指向同一个频率，底部数值验证“输入幅值 × 核的频率响应 = 输出幅值”。</p>
+          </div>
+          <canvas id="cnnFrequencyCanvas" width="1300" height="700"></canvas>
+          <div class="lab-caption">
+            <strong id="cnnFrequencyReadout">正在比较同一个二维频率点</strong>
+            <span>每幅热图为方便观察而单独调节亮度；下方数值使用未归一化的真实 DFT 幅值。</span>
+          </div>
+        </div>
+
+        <table class="compare" aria-label="空间域与频域理解 CNN 的区别">
+          <thead>
+            <tr>
+              <th>观察方式</th>
+              <th>容易回答的问题</th>
+              <th>傅里叶带来的额外意义</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>只看空间域卷积</td>
+              <td>某个输出格怎样由附近像素算出？特征出现在哪里？</td>
+              <td>局部计算直观，但不容易从大量权重直接概括整体滤波行为。</td>
+            </tr>
+            <tr>
+              <td>再看卷积核频谱</td>
+              <td>哪些方向、尺度和变化速度被保留或压制？</td>
+              <td>能解释模糊、锐化、边缘检测，也能检查下采样混叠和频率偏好。</td>
+            </tr>
+            <tr>
+              <td>使用 FFT 计算</td>
+              <td>长序列或大卷积核怎样降低计算量？</td>
+              <td>把滑动求和变成逐点乘法；是否更快取决于数据和卷积核大小。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="grid-2">
+          <article class="card soft">
+            <span class="tag">低通：模糊核</span>
+            <h3>保留缓慢变化，压低细碎变化</h3>
+            <p>图像中大片平缓区域属于低频，细纹和硬边缘含较多高频。均值模糊核把邻居平均，频域中主要让中心附近的低频通过。</p>
+          </article>
+          <article class="card warm">
+            <span class="tag">高通：边缘核</span>
+            <h3>忽略常量区域，突出变化位置</h3>
+            <p>Sobel 核所有权重之和为 0，所以纯色区域输出为 0；一旦左右或上下亮度突变，就会强烈响应。</p>
+          </article>
+          <article class="card cool">
+            <span class="tag">非线性：ReLU</span>
+            <h3>网络不只是一个大滤波器</h3>
+            <p>若只有很多线性卷积层，它们最终仍可合并成一次线性变换。ReLU 把负值截断，打破简单的频域乘法关系，让深层网络能组合出更复杂的特征。</p>
+          </article>
+          <article class="card">
+            <span class="tag">下采样与混叠</span>
+            <h3>缩小图像前应先限制高频</h3>
+            <p>池化或步长卷积会降低采样率。若高频没有先被适当滤除，不同频率可能混成假纹理，这就是混叠，也是抗锯齿网络关注的问题。</p>
+          </article>
+        </div>
+
+        <div class="note">
+          CNN 小结：<strong>空间域告诉我们特征在哪里，频域告诉我们卷积核在寻找什么尺度和方向。</strong>Fourier 变换把局部权重翻译成整体频率响应，并通过卷积定理提供频域计算方式；ReLU 等非线性则让深层 CNN 不再等价于一个简单的线性滤波器。
+        </div>
+
+        <div class="chapter-next">
+          <span><strong>整条主线：</strong>傅里叶先把复杂数据拆成频率成分，再让 AI 利用这些成分表示数据、解释滤波行为、学习物理场或加速大规模运算。</span>
+          <a href="#top">回到开头重新演示 ↑</a>
         </div>
       </div>
     </section>
@@ -1475,6 +1963,7 @@ F[f'](ω)
     function formulaLineToTex(line) {
       const trimmed = line.trim();
       if (!trimmed) return "";
+      if (trimmed.includes("\\")) return trimmed;
       const hasChinese = /[\u3400-\u9fff]/.test(trimmed);
       if (hasChinese) {
         const parts = trimmed.split(/[:：]/);
@@ -1533,6 +2022,25 @@ F[f'](ω)
     const exampleParamValue = document.getElementById("exampleParamValue");
     const exampleFormula = document.getElementById("exampleFormula");
     const exampleCaption = document.getElementById("exampleCaption");
+    const besselTerms = document.getElementById("besselTerms");
+    const besselTermsValue = document.getElementById("besselTermsValue");
+    const parsevalAlpha = document.getElementById("parsevalAlpha");
+    const parsevalAlphaValue = document.getElementById("parsevalAlphaValue");
+    const parsevalEnergyValue = document.getElementById("parsevalEnergyValue");
+    const convolutionExactX = document.getElementById("convolutionExactX");
+    const convolutionExactXValue = document.getElementById("convolutionExactXValue");
+    const convolutionAuto = document.getElementById("convolutionAuto");
+    const derivativeOmega = document.getElementById("derivativeOmega");
+    const derivativeOmegaValue = document.getElementById("derivativeOmegaValue");
+    const derivativeAuto = document.getElementById("derivativeAuto");
+    const cnnPattern = document.getElementById("cnnPattern");
+    const cnnKernel = document.getElementById("cnnKernel");
+    const cnnKernelHint = document.getElementById("cnnKernelHint");
+    const cnnPosition = document.getElementById("cnnPosition");
+    const cnnPositionValue = document.getElementById("cnnPositionValue");
+    const cnnAuto = document.getElementById("cnnAuto");
+    const cnnRelu = document.getElementById("cnnRelu");
+    const cnnFrequencyReadout = document.getElementById("cnnFrequencyReadout");
 
     function updateLabels() {
       harmonicsValue.textContent = harmonicsInput.value;
@@ -1557,6 +2065,19 @@ F[f'](ω)
       heatTimeValue.textContent = ht < 45 ? "短" : ht < 85 ? "中" : "长";
       const ep = Number(exampleParam.value);
       exampleParamValue.textContent = ep < 65 ? "小" : ep < 105 ? "中" : "大";
+      besselTermsValue.textContent = besselTerms.value;
+      const alpha = Number(parsevalAlpha.value) / 100;
+      parsevalAlphaValue.textContent = alpha.toFixed(2);
+      parsevalEnergyValue.textContent = Math.sqrt(Math.PI / (2 * alpha)).toFixed(3);
+      convolutionExactXValue.textContent = (Number(convolutionExactX.value) / 100).toFixed(2);
+      derivativeOmegaValue.textContent = (Number(derivativeOmega.value) / 100).toFixed(2);
+      cnnPositionValue.textContent = `第 ${Number(cnnPosition.value) + 1} / 64 格`;
+      cnnKernelHint.textContent = {
+        sobelX: "检测竖直边缘",
+        sobelY: "检测水平边缘",
+        blur: "保留低频",
+        sharpen: "增强高频"
+      }[cnnKernel.value];
     }
 
     [
@@ -1572,11 +2093,26 @@ F[f'](ω)
       scaleControl,
       convShift,
       heatTime,
-      exampleParam
+      exampleParam,
+      besselTerms,
+      parsevalAlpha,
+      convolutionExactX,
+      derivativeOmega,
+      cnnPosition
     ].forEach((input) => {
       input.addEventListener("input", updateLabels);
     });
     exampleFunction.addEventListener("change", updateLabels);
+    cnnKernel.addEventListener("change", updateLabels);
+    convolutionExactX.addEventListener("input", () => {
+      convolutionAuto.checked = false;
+    });
+    derivativeOmega.addEventListener("input", () => {
+      derivativeAuto.checked = false;
+    });
+    cnnPosition.addEventListener("input", () => {
+      cnnAuto.checked = false;
+    });
     updateLabels();
 
     function drawHero(time) {
@@ -2081,6 +2617,399 @@ F[f'](ω)
       drawText(ctx, "平移只改相位；压窄会让频谱变宽", mid - 130, h - 18, "#5b6678", 14, "700");
     }
 
+    function drawBessel(time) {
+      const canvas = document.getElementById("besselCanvas");
+      const { ctx, w, h } = fitCanvas(canvas);
+      ctx.clearRect(0, 0, w, h);
+      drawGrid(ctx, w, h);
+      const N = Number(besselTerms.value);
+      const left = 44;
+      const right = w - 44;
+      const plotBase = h * 0.43;
+      const amp = h * 0.17;
+      const target = [];
+      const approx = [];
+
+      for (let i = 0; i <= 520; i++) {
+        const x = -Math.PI + (i / 520) * Math.PI * 2;
+        const px = left + (i / 520) * (right - left);
+        const square = Math.sin(x) >= 0 ? 1 : -1;
+        let sum = 0;
+        for (let n = 1; n <= N; n += 2) {
+          sum += (4 / (Math.PI * n)) * Math.sin(n * x);
+        }
+        target.push({ x: px, y: plotBase - square * amp });
+        approx.push({ x: px, y: plotBase - sum * amp });
+      }
+
+      ctx.save();
+      ctx.strokeStyle = "#5b6678";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(left, plotBase);
+      ctx.lineTo(right, plotBase);
+      ctx.stroke();
+      ctx.restore();
+      pathWave(ctx, target, "rgba(193,70,58,0.35)", 3);
+      pathWave(ctx, approx, "#2364aa", 4);
+      drawText(ctx, "红色：标准方波 f(x)=±1", 24, 28, "#c1463a", 14, "800");
+      drawText(ctx, `蓝色：取到第 ${N} 次谐波的 Fourier 部分和`, 24, 52, "#2364aa", 14, "800");
+
+      let captured = 0;
+      const coeffs = [];
+      for (let n = 1; n <= N; n += 2) {
+        const e = 16 / (Math.PI * Math.PI * n * n);
+        captured += e;
+        coeffs.push({ n, e });
+      }
+      const total = 2;
+      const ratio = Math.min(1, captured / total);
+      const meterX = 46;
+      const meterY = h * 0.72;
+      const meterW = w - 92;
+      const meterH = 34;
+
+      ctx.save();
+      ctx.fillStyle = "#e5e9ef";
+      ctx.fillRect(meterX, meterY, meterW, meterH);
+      ctx.fillStyle = "#0c7c72";
+      ctx.fillRect(meterX, meterY, meterW * ratio, meterH);
+      ctx.strokeStyle = "#18212f";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(meterX, meterY, meterW, meterH);
+      ctx.restore();
+      drawText(ctx, `已捕获能量 ${captured.toFixed(4)}`, meterX, meterY - 16, "#0c7c72", 15, "800");
+      drawText(ctx, `总能量 ${total.toFixed(4)}`, meterX + meterW - 100, meterY - 16, "#18212f", 15, "800");
+      drawText(ctx, `剩余误差能量 ${(total - captured).toFixed(4)}`, meterX, meterY + meterH + 27, "#5b6678", 14, "700");
+
+      const coeffBase = h - 28;
+      const coeffArea = meterW * 0.58;
+      const active = coeffs.length ? Math.floor((time * 0.0012) % coeffs.length) : 0;
+      coeffs.forEach((item, idx) => {
+        const x = meterX + idx * (coeffArea / Math.max(1, coeffs.length));
+        const bh = Math.max(3, item.e / (16 / (Math.PI * Math.PI)) * 64);
+        ctx.save();
+        ctx.globalAlpha = idx === active ? 1 : 0.55;
+        ctx.fillStyle = idx === active ? "#b7791f" : "#2364aa";
+        ctx.fillRect(x, coeffBase - bh, Math.max(5, coeffArea / Math.max(1, coeffs.length) - 5), bh);
+        ctx.restore();
+      });
+      drawText(ctx, "每根小柱代表一个 b_n²；后面的高频能量越来越小", meterX + coeffArea + 18, coeffBase - 28, "#5b6678", 12, "700");
+    }
+
+    function drawParseval(time) {
+      const canvas = document.getElementById("parsevalCanvas");
+      const { ctx, w, h } = fitCanvas(canvas);
+      ctx.clearRect(0, 0, w, h);
+      drawGrid(ctx, w, h);
+      const alpha = Number(parsevalAlpha.value) / 100;
+      const energy = Math.sqrt(Math.PI / (2 * alpha));
+      const panelW = (w - 132) / 2;
+      const leftBox = { x: 42, y: 72, w: panelW, h: h - 150 };
+      const rightBox = { x: 90 + panelW, y: 72, w: panelW, h: h - 150 };
+      const leftBase = leftBox.y + leftBox.h * 0.76;
+      const rightBase = rightBox.y + rightBox.h * 0.76;
+      const xRange = 3.6 / Math.sqrt(alpha);
+      const omegaRange = 5.5 * Math.sqrt(alpha);
+
+      function fillCurve(box, base, fn, lo, hi, maxValue, color, fill) {
+        const pts = [];
+        for (let i = 0; i <= 420; i++) {
+          const v = lo + (i / 420) * (hi - lo);
+          const x = box.x + (i / 420) * box.w;
+          const y = base - (fn(v) / maxValue) * box.h * 0.58;
+          pts.push({ x, y });
+        }
+        ctx.save();
+        ctx.fillStyle = fill;
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, base);
+        pts.forEach((p) => ctx.lineTo(p.x, p.y));
+        ctx.lineTo(pts[pts.length - 1].x, base);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+        pathWave(ctx, pts, color, 4);
+      }
+
+      ctx.save();
+      ctx.strokeStyle = "#5b6678";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(leftBox.x, leftBase);
+      ctx.lineTo(leftBox.x + leftBox.w, leftBase);
+      ctx.moveTo(rightBox.x, rightBase);
+      ctx.lineTo(rightBox.x + rightBox.w, rightBase);
+      ctx.stroke();
+      ctx.restore();
+
+      fillCurve(
+        leftBox,
+        leftBase,
+        (x) => Math.exp(-2 * alpha * x * x),
+        -xRange,
+        xRange,
+        1,
+        "#2364aa",
+        "rgba(35,100,170,0.2)"
+      );
+      fillCurve(
+        rightBox,
+        rightBase,
+        (omega) => (1 / (2 * alpha)) * Math.exp(-(omega * omega) / (2 * alpha)),
+        -omegaRange,
+        omegaRange,
+        1 / (2 * alpha),
+        "#c1463a",
+        "rgba(193,70,58,0.2)"
+      );
+
+      drawText(ctx, "x 域能量密度 |f(x)|²", leftBox.x, 34, "#2364aa", 15, "800");
+      drawText(ctx, "频域能量密度 |f̂(ω)|²/(2π)", rightBox.x, 34, "#c1463a", 15, "800");
+      drawText(ctx, `阴影面积 = ${energy.toFixed(4)}`, leftBox.x + 18, leftBase + 35, "#2364aa", 14, "800");
+      drawText(ctx, `阴影面积 = ${energy.toFixed(4)}`, rightBox.x + 18, rightBase + 35, "#c1463a", 14, "800");
+
+      const pulse = 0.65 + 0.35 * Math.sin(time * 0.003);
+      ctx.save();
+      ctx.globalAlpha = pulse;
+      ctx.fillStyle = "#0c7c72";
+      ctx.font = "800 32px -apple-system, BlinkMacSystemFont, sans-serif";
+      ctx.fillText("=", w / 2 - 10, h * 0.5);
+      ctx.restore();
+      drawText(ctx, "横轴刻度不同；按刻度积分后的能量严格相同", w / 2 - 156, h - 26, "#0c7c72", 14, "800");
+    }
+
+    function drawConvolutionExact(time) {
+      if (convolutionAuto.checked) {
+        const cycle = (time * 0.00022) % 1;
+        convolutionExactX.value = String(Math.round((-0.4 + 2.8 * cycle) * 100));
+        convolutionExactXValue.textContent = (Number(convolutionExactX.value) / 100).toFixed(2);
+      }
+      const canvas = document.getElementById("convolutionExactCanvas");
+      const { ctx, w, h } = fitCanvas(canvas);
+      ctx.clearRect(0, 0, w, h);
+      drawGrid(ctx, w, h);
+      const xValue = Number(convolutionExactX.value) / 100;
+      const domainMin = -0.5;
+      const domainMax = 2.5;
+      const left = 54;
+      const right = w - 54;
+      const topBase = h * 0.42;
+      const resultBase = h * 0.83;
+      const topAmp = h * 0.18;
+      const resultAmp = h * 0.17;
+      const mapX = (v) => left + ((v - domainMin) / (domainMax - domainMin)) * (right - left);
+
+      ctx.save();
+      ctx.strokeStyle = "#5b6678";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(left, topBase);
+      ctx.lineTo(right, topBase);
+      ctx.moveTo(left, resultBase);
+      ctx.lineTo(right, resultBase);
+      ctx.stroke();
+      ctx.restore();
+
+      const fLeft = 0;
+      const fRight = 1;
+      const gLeft = xValue - 1;
+      const gRight = xValue;
+      const overlapLeft = Math.max(fLeft, gLeft);
+      const overlapRight = Math.min(fRight, gRight);
+      const overlap = Math.max(0, overlapRight - overlapLeft);
+
+      ctx.save();
+      ctx.fillStyle = "rgba(35,100,170,0.2)";
+      ctx.strokeStyle = "#2364aa";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.rect(mapX(fLeft), topBase - topAmp, mapX(fRight) - mapX(fLeft), topAmp);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "rgba(193,70,58,0.18)";
+      ctx.strokeStyle = "#c1463a";
+      ctx.beginPath();
+      ctx.rect(mapX(gLeft), topBase - topAmp * 0.78, mapX(gRight) - mapX(gLeft), topAmp * 0.78);
+      ctx.fill();
+      ctx.stroke();
+
+      if (overlap > 0) {
+        ctx.fillStyle = "rgba(12,124,114,0.45)";
+        ctx.fillRect(
+          mapX(overlapLeft),
+          topBase - topAmp,
+          mapX(overlapRight) - mapX(overlapLeft),
+          topAmp
+        );
+      }
+      ctx.restore();
+
+      drawText(ctx, "蓝色：f(t)=1，区间 [0,1]", 26, 30, "#2364aa", 14, "800");
+      drawText(ctx, "红色：g(x-t)=1，区间 [x-1,x]", 26, 54, "#c1463a", 14, "800");
+      drawText(ctx, `绿色重叠长度 = 积分值 = ${overlap.toFixed(2)}`, 26, 78, "#0c7c72", 15, "800");
+
+      const triangle = [];
+      for (let i = 0; i <= 420; i++) {
+        const v = domainMin + (i / 420) * (domainMax - domainMin);
+        const y = v < 0 || v > 2 ? 0 : v <= 1 ? v : 2 - v;
+        triangle.push({ x: mapX(v), y: resultBase - y * resultAmp });
+      }
+      pathWave(ctx, triangle, "#6951a6", 4);
+
+      const currentY = xValue < 0 || xValue > 2 ? 0 : xValue <= 1 ? xValue : 2 - xValue;
+      const currentXpx = mapX(xValue);
+      const currentYpx = resultBase - currentY * resultAmp;
+      ctx.save();
+      ctx.strokeStyle = "#b7791f";
+      ctx.setLineDash([6, 5]);
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(currentXpx, topBase + 16);
+      ctx.lineTo(currentXpx, resultBase + 10);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#b7791f";
+      ctx.beginPath();
+      ctx.arc(currentXpx, currentYpx, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+      drawText(ctx, "下方紫线：完整卷积结果 (f*g)(x)", 26, resultBase - resultAmp - 26, "#6951a6", 14, "800");
+      drawText(ctx, `当前点：x=${xValue.toFixed(2)}，(f*g)(x)=${currentY.toFixed(2)}`, 26, h - 22, "#b7791f", 14, "800");
+    }
+
+    function drawDerivativeExact(time) {
+      if (derivativeAuto.checked) {
+        const omega = 3 * Math.sin(time * 0.0011);
+        derivativeOmega.value = String(Math.round(omega * 100));
+        derivativeOmegaValue.textContent = omega.toFixed(2);
+      }
+      const canvas = document.getElementById("derivativeExactCanvas");
+      const { ctx, w, h } = fitCanvas(canvas);
+      ctx.clearRect(0, 0, w, h);
+      drawGrid(ctx, w, h);
+      const omegaSelected = Number(derivativeOmega.value) / 100;
+      const mid = w / 2;
+      const left = 48;
+      const right = w - 48;
+      const topBase = h * 0.42;
+      const bottomBase = h * 0.82;
+      const xMin = -3.5;
+      const xMax = 3.5;
+      const omegaMin = -3.5;
+      const omegaMax = 3.5;
+      const leftWidth = mid - left - 34;
+      const rightStart = mid + 34;
+      const rightWidth = right - rightStart;
+      const mapLeft = (v) => left + ((v - xMin) / (xMax - xMin)) * leftWidth;
+      const mapRight = (v) => rightStart + ((v - omegaMin) / (omegaMax - omegaMin)) * rightWidth;
+
+      ctx.save();
+      ctx.strokeStyle = "#5b6678";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(left, topBase);
+      ctx.lineTo(mid - 34, topBase);
+      ctx.moveTo(rightStart, topBase);
+      ctx.lineTo(right, topBase);
+      ctx.moveTo(mid, 36);
+      ctx.lineTo(mid, h - 30);
+      ctx.stroke();
+      ctx.restore();
+
+      const fPts = [];
+      const dPts = [];
+      for (let i = 0; i <= 420; i++) {
+        const x = xMin + (i / 420) * (xMax - xMin);
+        const f = Math.exp(-x * x / 2);
+        const df = -x * f;
+        const px = mapLeft(x);
+        fPts.push({ x: px, y: topBase - f * h * 0.23 });
+        dPts.push({ x: px, y: topBase - df * h * 0.23 });
+      }
+      pathWave(ctx, fPts, "#2364aa", 4);
+      pathWave(ctx, dPts, "#c1463a", 4);
+      drawText(ctx, "x 域：蓝 f(x)，红 f'(x)", left, 30, "#18212f", 15, "800");
+      drawText(ctx, "导数表示原函数的斜率：左升为正，右降为负", left, 56, "#5b6678", 13, "700");
+
+      const scale = Math.sqrt(2 * Math.PI);
+      const Fpts = [];
+      const DFpts = [];
+      for (let i = 0; i <= 420; i++) {
+        const om = omegaMin + (i / 420) * (omegaMax - omegaMin);
+        const F = scale * Math.exp(-om * om / 2);
+        const imagDF = om * F;
+        const px = mapRight(om);
+        Fpts.push({ x: px, y: topBase - (F / scale) * h * 0.23 });
+        DFpts.push({ x: px, y: topBase - (imagDF / scale) * h * 0.23 });
+      }
+      pathWave(ctx, Fpts, "#2364aa", 4);
+      pathWave(ctx, DFpts, "#c1463a", 4);
+      drawText(ctx, "频域：蓝 F[f]（实部），红 Im F[f']", rightStart, 30, "#18212f", 15, "800");
+      drawText(ctx, "红线数值正好是 ω × 蓝线数值", rightStart, 56, "#5b6678", 13, "700");
+
+      const selectedF = scale * Math.exp(-omegaSelected * omegaSelected / 2);
+      const selectedDF = omegaSelected * selectedF;
+      const selectedX = mapRight(omegaSelected);
+      const blueY = topBase - (selectedF / scale) * h * 0.23;
+      const redY = topBase - (selectedDF / scale) * h * 0.23;
+      ctx.save();
+      ctx.strokeStyle = "#b7791f";
+      ctx.setLineDash([6, 5]);
+      ctx.beginPath();
+      ctx.moveTo(selectedX, 72);
+      ctx.lineTo(selectedX, topBase + 24);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#2364aa";
+      ctx.beginPath();
+      ctx.arc(selectedX, blueY, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#c1463a";
+      ctx.beginPath();
+      ctx.arc(selectedX, redY, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      const phasorCx = mid + 115;
+      const phasorCy = bottomBase - 20;
+      const phasorR = Math.min(70, h * 0.12);
+      const normalizedF = selectedF / scale;
+      const normalizedDF = selectedDF / scale;
+      ctx.save();
+      ctx.strokeStyle = "#d4dbe5";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(phasorCx, phasorCy, phasorR, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(phasorCx - phasorR - 10, phasorCy);
+      ctx.lineTo(phasorCx + phasorR + 10, phasorCy);
+      ctx.moveTo(phasorCx, phasorCy - phasorR - 10);
+      ctx.lineTo(phasorCx, phasorCy + phasorR + 10);
+      ctx.stroke();
+
+      ctx.strokeStyle = "#2364aa";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(phasorCx, phasorCy);
+      ctx.lineTo(phasorCx + normalizedF * phasorR, phasorCy);
+      ctx.stroke();
+
+      ctx.strokeStyle = "#c1463a";
+      ctx.beginPath();
+      ctx.moveTo(phasorCx, phasorCy);
+      ctx.lineTo(phasorCx, phasorCy - normalizedDF * phasorR);
+      ctx.stroke();
+      ctx.restore();
+
+      drawText(ctx, "复平面：乘 iω", rightStart, bottomBase - phasorR - 45, "#6951a6", 15, "800");
+      drawText(ctx, "蓝箭头 F[f] 在实轴上", phasorCx + phasorR + 28, phasorCy - 20, "#2364aa", 13, "800");
+      drawText(ctx, "红箭头 iωF[f] 转到虚轴", phasorCx + phasorR + 28, phasorCy + 5, "#c1463a", 13, "800");
+      drawText(ctx, `ω=${omegaSelected.toFixed(2)}：长度乘 |ω|=${Math.abs(omegaSelected).toFixed(2)}，方向旋转 ${omegaSelected >= 0 ? "+90°" : "-90°"}`, rightStart, h - 24, "#b7791f", 13, "800");
+    }
+
     function drawConvolution() {
       const canvas = document.getElementById("convolutionCanvas");
       const { ctx, w, h } = fitCanvas(canvas);
@@ -2359,12 +3288,427 @@ F[f'](ω)
       drawText(ctx, "积分就是把这些旋转贡献累加", insetX + 82, insetY + 64, "#5b6678", 12, "700");
     }
 
+    const cnnKernels = {
+      sobelX: {
+        values: [
+          [-1, 0, 1],
+          [-2, 0, 2],
+          [-1, 0, 1]
+        ],
+        name: "Sobel X"
+      },
+      sobelY: {
+        values: [
+          [-1, -2, -1],
+          [0, 0, 0],
+          [1, 2, 1]
+        ],
+        name: "Sobel Y"
+      },
+      blur: {
+        values: [
+          [1 / 9, 1 / 9, 1 / 9],
+          [1 / 9, 1 / 9, 1 / 9],
+          [1 / 9, 1 / 9, 1 / 9]
+        ],
+        name: "均值模糊"
+      },
+      sharpen: {
+        values: [
+          [0, -1, 0],
+          [-1, 5, -1],
+          [0, -1, 0]
+        ],
+        name: "锐化"
+      }
+    };
+
+    function cnnPatternMatrix(kind, size) {
+      const matrix = Array.from({ length: size }, () => Array(size).fill(0));
+      for (let row = 0; row < size; row++) {
+        for (let col = 0; col < size; col++) {
+          if (kind === "verticalEdge") {
+            matrix[row][col] = col < size / 2 ? 0.12 : 0.92;
+          } else if (kind === "horizontalEdge") {
+            matrix[row][col] = row < size / 2 ? 0.12 : 0.92;
+          } else if (kind === "checker") {
+            const block = Math.max(1, Math.round(size / 4));
+            matrix[row][col] = (Math.floor(row / block) + Math.floor(col / block)) % 2 ? 0.92 : 0.12;
+          } else {
+            const dx = col - (size - 1) / 2;
+            const dy = row - (size - 1) / 2;
+            matrix[row][col] = Math.exp(-(dx * dx + dy * dy) / (size * 0.12));
+          }
+        }
+      }
+      return matrix;
+    }
+
+    function correlateValid(input, kernel, useRelu) {
+      const outputSize = input.length - kernel.length + 1;
+      const raw = Array.from({ length: outputSize }, () => Array(outputSize).fill(0));
+      const output = Array.from({ length: outputSize }, () => Array(outputSize).fill(0));
+      for (let row = 0; row < outputSize; row++) {
+        for (let col = 0; col < outputSize; col++) {
+          let sum = 0;
+          for (let kr = 0; kr < kernel.length; kr++) {
+            for (let kc = 0; kc < kernel.length; kc++) {
+              sum += input[row + kr][col + kc] * kernel[kr][kc];
+            }
+          }
+          raw[row][col] = sum;
+          output[row][col] = useRelu ? Math.max(0, sum) : sum;
+        }
+      }
+      return { raw, output };
+    }
+
+    function matrixMaxAbs(matrix) {
+      let max = 0.000001;
+      matrix.forEach((row) => row.forEach((value) => {
+        max = Math.max(max, Math.abs(value));
+      }));
+      return max;
+    }
+
+    function matrixColor(value, maxAbs, mode) {
+      if (mode === "input") {
+        const t = Math.max(0, Math.min(1, value));
+        return `rgb(${Math.round(245 - 170 * t)},${Math.round(249 - 112 * t)},${Math.round(252 - 64 * t)})`;
+      }
+      const t = Math.min(1, Math.abs(value) / maxAbs);
+      if (mode === "positive") {
+        return `rgb(${Math.round(244 - 192 * t)},${Math.round(249 - 96 * t)},${Math.round(247 - 119 * t)})`;
+      }
+      return value >= 0
+        ? `rgb(${Math.round(250 - 56 * t)},${Math.round(246 - 174 * t)},${Math.round(241 - 183 * t)})`
+        : `rgb(${Math.round(239 - 181 * t)},${Math.round(246 - 132 * t)},${Math.round(252 - 82 * t)})`;
+    }
+
+    function drawMatrixGrid(ctx, matrix, x, y, size, options = {}) {
+      const rows = matrix.length;
+      const cols = matrix[0].length;
+      const cellW = size / cols;
+      const cellH = size / rows;
+      const maxAbs = options.maxAbs || matrixMaxAbs(matrix);
+      ctx.save();
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          const value = matrix[row][col];
+          ctx.fillStyle = matrixColor(value, maxAbs, options.mode || "signed");
+          ctx.fillRect(x + col * cellW, y + row * cellH, cellW, cellH);
+          ctx.strokeStyle = "rgba(24,33,47,0.22)";
+          ctx.lineWidth = 1;
+          ctx.strokeRect(x + col * cellW, y + row * cellH, cellW, cellH);
+          if (options.showValues && cellW >= 28) {
+            const intensity = Math.abs(value) / maxAbs;
+            ctx.fillStyle = intensity > 0.52 ? "#ffffff" : "#18212f";
+            ctx.font = `700 ${Math.min(14, cellW * 0.28)}px ui-monospace, SFMono-Regular, monospace`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            const label = Math.abs(value) < 0.001 ? "0" : Math.abs(value) < 1 ? value.toFixed(2) : value.toFixed(0);
+            ctx.fillText(label, x + (col + 0.5) * cellW, y + (row + 0.5) * cellH);
+          }
+        }
+      }
+      ctx.strokeStyle = "#5b6678";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x, y, size, size);
+      ctx.restore();
+      return { cellW, cellH };
+    }
+
+    function drawCnnLocal(time) {
+      if (cnnAuto.checked) {
+        cnnPosition.value = String(Math.floor(time / 210) % 64);
+        cnnPositionValue.textContent = `第 ${Number(cnnPosition.value) + 1} / 64 格`;
+      }
+      const canvas = document.getElementById("cnnCanvas");
+      const { ctx, w, h } = fitCanvas(canvas);
+      ctx.clearRect(0, 0, w, h);
+      drawGrid(ctx, w, h);
+
+      const input = cnnPatternMatrix(cnnPattern.value, 10);
+      const kernelInfo = cnnKernels[cnnKernel.value];
+      const result = correlateValid(input, kernelInfo.values, cnnRelu.checked);
+      const position = Number(cnnPosition.value);
+      const activeRow = Math.floor(position / 8);
+      const activeCol = position % 8;
+      const rawValue = result.raw[activeRow][activeCol];
+      const outputValue = result.output[activeRow][activeCol];
+      const narrow = w < 720;
+
+      let inputBox;
+      let kernelBox;
+      let outputBox;
+      if (narrow) {
+        const inputSize = Math.min(210, w - 72);
+        const kernelSize = Math.min(112, w - 120);
+        const outputSize = Math.min(176, w - 92);
+        inputBox = { x: (w - inputSize) / 2, y: 54, size: inputSize };
+        kernelBox = { x: (w - kernelSize) / 2, y: 320, size: kernelSize };
+        outputBox = { x: (w - outputSize) / 2, y: 492, size: outputSize };
+      } else {
+        const matrixSize = Math.min(286, (w - 330) / 2);
+        const kernelSize = Math.min(142, w * 0.14);
+        inputBox = { x: 42, y: 108, size: matrixSize };
+        kernelBox = { x: w / 2 - kernelSize / 2, y: 170, size: kernelSize };
+        outputBox = { x: w - 42 - matrixSize, y: 108, size: matrixSize };
+      }
+
+      drawText(ctx, "输入 X：像素矩阵", inputBox.x, inputBox.y - 22, "#2364aa", 15, "800");
+      const inputCell = drawMatrixGrid(ctx, input, inputBox.x, inputBox.y, inputBox.size, {
+        mode: "input",
+        showValues: true
+      });
+      ctx.save();
+      ctx.strokeStyle = "#b7791f";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(
+        inputBox.x + activeCol * inputCell.cellW,
+        inputBox.y + activeRow * inputCell.cellH,
+        inputCell.cellW * 3,
+        inputCell.cellH * 3
+      );
+      ctx.restore();
+
+      drawText(ctx, `卷积核 K：${kernelInfo.name}`, kernelBox.x, kernelBox.y - 22, "#6951a6", 15, "800");
+      drawMatrixGrid(ctx, kernelInfo.values, kernelBox.x, kernelBox.y, kernelBox.size, {
+        mode: cnnKernel.value === "blur" ? "positive" : "signed",
+        showValues: true
+      });
+
+      drawText(ctx, cnnRelu.checked ? "输出：ReLU 特征图" : "输出 Y：特征图", outputBox.x, outputBox.y - 22, "#0c7c72", 15, "800");
+      const outputCell = drawMatrixGrid(ctx, result.output, outputBox.x, outputBox.y, outputBox.size, {
+        mode: cnnRelu.checked ? "positive" : "signed",
+        showValues: true
+      });
+      ctx.save();
+      ctx.strokeStyle = "#b7791f";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(
+        outputBox.x + activeCol * outputCell.cellW,
+        outputBox.y + activeRow * outputCell.cellH,
+        outputCell.cellW,
+        outputCell.cellH
+      );
+      ctx.restore();
+
+      if (!narrow) {
+        ctx.save();
+        ctx.strokeStyle = "#9aa5b4";
+        ctx.lineWidth = 3;
+        ctx.setLineDash([7, 6]);
+        ctx.beginPath();
+        ctx.moveTo(inputBox.x + inputBox.size + 18, inputBox.y + inputBox.size / 2);
+        ctx.lineTo(kernelBox.x - 18, kernelBox.y + kernelBox.size / 2);
+        ctx.moveTo(kernelBox.x + kernelBox.size + 18, kernelBox.y + kernelBox.size / 2);
+        ctx.lineTo(outputBox.x - 18, outputBox.y + outputBox.size / 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      const explanationY = narrow ? h - 86 : Math.max(inputBox.y + inputBox.size + 66, h - 82);
+      const reluText = cnnRelu.checked ? `；ReLU 后 max(0, ${rawValue.toFixed(2)}) = ${outputValue.toFixed(2)}` : "";
+      drawText(
+        ctx,
+        narrow
+          ? `位置 (${activeRow + 1}, ${activeCol + 1})：加权和 = ${rawValue.toFixed(2)}`
+          : `位置 (${activeRow + 1}, ${activeCol + 1})：9 个“像素 × 权重”相加 = ${rawValue.toFixed(2)}${reluText}`,
+        narrow ? 18 : 42,
+        explanationY,
+        "#b7791f",
+        narrow ? 12 : 14,
+        "800"
+      );
+      if (narrow && cnnRelu.checked) {
+        drawText(ctx, `ReLU 后 = max(0, ${rawValue.toFixed(2)}) = ${outputValue.toFixed(2)}`, 18, explanationY + 21, "#b7791f", 11, "800");
+      }
+      drawText(
+        ctx,
+        kernelInfo.values.flat().reduce((sum, value) => sum + value, 0) === 0
+          ? narrow ? "权重和为 0：纯色抵消，只响应变化。" : "该卷积核权重和为 0：纯色区域会互相抵消，亮度变化处才响应。"
+          : narrow ? "权重和不为 0：会保留平均亮度。" : "该卷积核权重和不为 0：它会保留或重新加权区域的平均亮度。",
+        narrow ? 18 : 42,
+        explanationY + (narrow && cnnRelu.checked ? 42 : 26),
+        "#5b6678",
+        narrow ? 11 : 13,
+        "700"
+      );
+    }
+
+    function dftMagnitude2D(matrix) {
+      const size = matrix.length;
+      const angles = Array.from({ length: size }, (_, k) =>
+        Array.from({ length: size }, (_, n) => -2 * Math.PI * k * n / size)
+      );
+      const rowTransform = Array.from({ length: size }, () =>
+        Array.from({ length: size }, () => ({ re: 0, im: 0 }))
+      );
+      for (let row = 0; row < size; row++) {
+        for (let kx = 0; kx < size; kx++) {
+          let re = 0;
+          let im = 0;
+          for (let x = 0; x < size; x++) {
+            re += matrix[row][x] * Math.cos(angles[kx][x]);
+            im += matrix[row][x] * Math.sin(angles[kx][x]);
+          }
+          rowTransform[row][kx] = { re, im };
+        }
+      }
+      const magnitude = Array.from({ length: size }, () => Array(size).fill(0));
+      for (let ky = 0; ky < size; ky++) {
+        for (let kx = 0; kx < size; kx++) {
+          let re = 0;
+          let im = 0;
+          for (let row = 0; row < size; row++) {
+            const value = rowTransform[row][kx];
+            const angle = angles[ky][row];
+            re += value.re * Math.cos(angle) - value.im * Math.sin(angle);
+            im += value.re * Math.sin(angle) + value.im * Math.cos(angle);
+          }
+          magnitude[ky][kx] = Math.hypot(re, im);
+        }
+      }
+      return magnitude;
+    }
+
+    let cnnSpectrumCache = null;
+
+    function getCnnSpectrumData() {
+      const key = `${cnnPattern.value}:${cnnKernel.value}`;
+      if (cnnSpectrumCache && cnnSpectrumCache.key === key) return cnnSpectrumCache;
+      const size = 16;
+      const input = cnnPatternMatrix(cnnPattern.value, size);
+      const paddedKernel = Array.from({ length: size }, () => Array(size).fill(0));
+      const kernel = cnnKernels[cnnKernel.value].values;
+      for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 3; col++) {
+          paddedKernel[row][col] = kernel[row][col];
+        }
+      }
+      const inputMagnitude = dftMagnitude2D(input);
+      const kernelMagnitude = dftMagnitude2D(paddedKernel);
+      const outputMagnitude = inputMagnitude.map((row, rowIndex) =>
+        row.map((value, colIndex) => value * kernelMagnitude[rowIndex][colIndex])
+      );
+      cnnSpectrumCache = { key, size, inputMagnitude, kernelMagnitude, outputMagnitude };
+      return cnnSpectrumCache;
+    }
+
+    function shiftedMagnitude(matrix, row, col) {
+      const size = matrix.length;
+      return matrix[(row + size / 2) % size][(col + size / 2) % size];
+    }
+
+    function drawSpectrumHeatmap(ctx, matrix, box, activeRow, activeCol) {
+      const size = matrix.length;
+      const cell = box.size / size;
+      let max = 0.000001;
+      matrix.forEach((row) => row.forEach((value) => {
+        max = Math.max(max, value);
+      }));
+      const logMax = Math.log1p(max);
+      ctx.save();
+      for (let row = 0; row < size; row++) {
+        for (let col = 0; col < size; col++) {
+          const value = shiftedMagnitude(matrix, row, col);
+          const t = Math.log1p(value) / logMax;
+          const r = Math.round(247 - 219 * t);
+          const g = Math.round(249 - 100 * t);
+          const b = Math.round(248 - 111 * t);
+          ctx.fillStyle = `rgb(${r},${g},${b})`;
+          ctx.fillRect(box.x + col * cell, box.y + row * cell, cell + 0.4, cell + 0.4);
+        }
+      }
+      ctx.strokeStyle = "#5b6678";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(box.x, box.y, box.size, box.size);
+      const cx = box.x + (activeCol + 0.5) * cell;
+      const cy = box.y + (activeRow + 0.5) * cell;
+      ctx.strokeStyle = "#b7791f";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(box.x, cy);
+      ctx.lineTo(box.x + box.size, cy);
+      ctx.moveTo(cx, box.y);
+      ctx.lineTo(cx, box.y + box.size);
+      ctx.stroke();
+      ctx.fillStyle = "#ffffff";
+      ctx.strokeStyle = "#b7791f";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, Math.max(4, cell * 0.32), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function formatMagnitude(value) {
+      if (value === 0) return "0";
+      if (value >= 10000 || value < 0.01) return value.toExponential(2);
+      return value.toFixed(2);
+    }
+
+    function drawCnnFrequency(time) {
+      const canvas = document.getElementById("cnnFrequencyCanvas");
+      const { ctx, w, h } = fitCanvas(canvas);
+      ctx.clearRect(0, 0, w, h);
+      drawGrid(ctx, w, h);
+      const data = getCnnSpectrumData();
+      const step = Math.floor(time / 180) % (data.size * data.size);
+      const activeRow = Math.floor(step / data.size);
+      const activeCol = step % data.size;
+      const narrow = w < 720;
+      const boxes = [];
+      if (narrow) {
+        const boxSize = Math.min(174, w - 104);
+        [54, 292, 530].forEach((y) => {
+          boxes.push({ x: (w - boxSize) / 2, y, size: boxSize });
+        });
+      } else {
+        const boxSize = Math.min(286, (w - 170) / 3);
+        const gap = (w - 3 * boxSize) / 4;
+        for (let i = 0; i < 3; i++) {
+          boxes.push({ x: gap + i * (boxSize + gap), y: 112, size: boxSize });
+        }
+      }
+
+      const titles = ["输入频谱 |F[X]|", "卷积核频响 |F[K]|", "输出频谱 |F[Y]|"];
+      const matrices = [data.inputMagnitude, data.kernelMagnitude, data.outputMagnitude];
+      boxes.forEach((box, index) => {
+        drawText(ctx, titles[index], box.x, box.y - 22, ["#2364aa", "#6951a6", "#0c7c72"][index], narrow ? 13 : 15, "800");
+        drawSpectrumHeatmap(ctx, matrices[index], box, activeRow, activeCol);
+      });
+
+      const inputValue = shiftedMagnitude(data.inputMagnitude, activeRow, activeCol);
+      const kernelValue = shiftedMagnitude(data.kernelMagnitude, activeRow, activeCol);
+      const outputValue = shiftedMagnitude(data.outputMagnitude, activeRow, activeCol);
+      const frequencyX = activeCol - data.size / 2;
+      const frequencyY = activeRow - data.size / 2;
+      const equation = `${formatMagnitude(inputValue)} × ${formatMagnitude(kernelValue)} = ${formatMagnitude(outputValue)}`;
+      const equationY = narrow ? h - 48 : boxes[0].y + boxes[0].size + 72;
+      drawText(ctx, `频率格 (p,q)=(${frequencyX},${frequencyY})${narrow ? "" : `：${equation}`}`, narrow ? 16 : 44, equationY, "#b7791f", narrow ? 12 : 15, "800");
+      if (narrow) {
+        drawText(ctx, equation, 16, equationY + 22, "#b7791f", 12, "800");
+      } else {
+        drawText(ctx, "中心是零频（整体平均亮度），越靠边代表空间变化越快。", 44, equationY + 28, "#5b6678", 13, "700");
+      }
+      cnnFrequencyReadout.textContent = `当前频率 (${frequencyX}, ${frequencyY})：|F[X]| × |F[K]| = |F[Y]|，即 ${equation}`;
+    }
+
     function animate(time) {
       drawHero(time);
       drawSeriesVsTransform(time);
       drawCircle(time);
       drawCoeff(time);
       drawExampleTransform(time);
+      drawBessel(time);
+      drawParseval(time);
+      drawConvolutionExact(time);
+      drawDerivativeExact(time);
+      drawCnnLocal(time);
+      drawCnnFrequency(time);
       requestAnimationFrame(animate);
     }
 
@@ -2392,7 +3736,9 @@ F[f'](ω)
       scaleControl,
       convShift,
       heatTime,
-      exampleParam
+      exampleParam,
+      besselTerms,
+      parsevalAlpha
     ].forEach((input) => {
       input.addEventListener("input", drawStatic);
     });
